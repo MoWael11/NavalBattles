@@ -126,13 +126,10 @@ let originalYBot;
 let started = true
 async function botTurn() {
   if (goLeft) {
-    console.log('im left')
     map.grid[yForBot][xForBot].id === 6 ? (bigShip = true) : "";
     if (xForBot > 0 && map.grid[yForBot][xForBot - 1].shoted === false && bigShip === false) {
       xForBot -= 1;
       if (map.grid[yForBot][xForBot].occupied === false) {
-        console.log('i shoted in left and there were no ships next time i will shoot right');
-        console.log(`x: ${xForBot} y ${yForBot}`);
         goLeft = false;
         goRight = true;
       }
@@ -141,30 +138,20 @@ async function botTurn() {
       xForBot = originalXBot;
       if (xForBot < 13 && map.grid[yForBot][xForBot + 1].shoted === false) {
         xForBot += 1;
-        console.log('i canot shot left there are no space i will shot right');
-        console.log(`x: ${xForBot} y ${yForBot}`);
         if (map.grid[yForBot][xForBot].occupied === false) {
-          console.log('there are no navals in right next time will go down')
           goDown = true;
         } else {
-          console.log('there are navals in right next time will go right')
           goRight = true;
         }
       } else if (originalYBot < 13 && map.grid[yForBot + 1][originalXBot].shoted === false ) {
         yForBot = originalYBot + 1;
-        console.log('i canot shot right it is already shoted or there are no space i will shot down');
-        console.log(`x: ${xForBot} y ${yForBot}`);
         if (map.grid[yForBot][xForBot].occupied === false) {
-          console.log('there are no navals in bottom next time will go up')
           goUp = true;
         } else {
-          console.log('there are navals in bottom next time will go down')
           goDown = true;
         }
       } else {
         yForBot = originalYBot - 1;
-        console.log('i canot shot down it is already shoted or there are no space i will shot up and next time i will switch to up');
-        console.log(`x: ${xForBot} y ${yForBot}`);
         goUp = true;
       }
     } else {
@@ -210,13 +197,10 @@ async function botTurn() {
       }
     }
   } else if (goRight) {
-    console.log('im right')
     xForBot < originalXBot ? (xForBot = originalXBot) : "";
     if (xForBot < 13 && map.grid[yForBot][xForBot + 1].shoted === false) {
       xForBot += 1;
       if (map.grid[yForBot][xForBot].occupied === false) {
-        console.log('i shoted in right and there were no ships next time i will shoot down');
-        console.log(`x: ${xForBot} y ${yForBot}`)
         goRight = false;
         goDown = true;
       }
@@ -224,30 +208,21 @@ async function botTurn() {
       goRight = false;
       if (originalYBot < 13 && map.grid[yForBot + 1][xForBot].shoted === false) {
         yForBot = originalYBot + 1;
-        console.log('i canot shot right there are no space i will shot down');
-        console.log(`x: ${xForBot} y ${yForBot}`)
         if (map.grid[yForBot][xForBot].occupied === false) {
-          console.log('there are no navals in buttom next time will go up')
           goUp = true;
         } else {
-          console.log('there are navals in buttom next time will go down as steatment')
           goDown = true;
         }
       } else {
         yForBot = originalYBot - 1;
-        console.log('i canot shot down there are no space i will shot up');
-        console.log(`x: ${xForBot} y ${yForBot}`)
         goUp = true;
       }
     }
   } else if (goDown) {    
-    console.log('im down')
     xForBot = originalXBot;
     if (yForBot < 13 && map.grid[yForBot + 1][xForBot].shoted === false) {
       yForBot += 1;
       if (map.grid[yForBot][xForBot].occupied === false) {
-        console.log('i shoted in bottom and there were no ships next time i will shoot up');
-        console.log(`x: ${xForBot} y ${yForBot}`)
         goDown = false;
         goUp = true;
       }
@@ -256,23 +231,16 @@ async function botTurn() {
       yForBot = originalYBot;
       if (yForBot > 0 && map.grid[yForBot - 1][xForBot].shoted === false) {
         yForBot = originalYBot - 1;
-        console.log('i canot shot down there are no space i will shot up');
-        console.log(`x: ${xForBot} y ${yForBot}`)
         goUp = true;
       } else {
-        console.log('i cant got up i will go random');
         casual = true;
       }
     }
   } else if (goUp) {
-    console.log('im up')
     yForBot > originalYBot ? (yForBot = originalYBot) : "";
     if (yForBot > 0 && map.grid[yForBot - 1][xForBot].shoted === false && xForBot >= 0) {
       yForBot -= 1;
-      console.log('i can go up i will go up right now');
-      console.log(`x: ${xForBot} y ${yForBot}`)
       if (map.grid[yForBot][xForBot].occupied === false) {
-        console.log('there are no ships in button next time will go randomly');
         goUp = false;
         casual = true;
       }
@@ -280,7 +248,6 @@ async function botTurn() {
   } else if (casual) {
     do {
       if (Math.floor(Math.random() * 12) === 6) {
-        console.log('im calcolated');
         do {
           xForBot = Math.floor(Math.random() * 14);
           yForBot = Math.floor(Math.random() * 14);
@@ -290,7 +257,6 @@ async function botTurn() {
           originalYBot = yForBot;
         } while (map.grid[yForBot][xForBot].occupied === false);
       } else {
-        console.log('im random');
         xForBot = Math.floor(Math.random() * 14);
         yForBot = Math.floor(Math.random() * 14);
         map.grid[yForBot][xForBot].occupied === true
